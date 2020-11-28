@@ -24,9 +24,9 @@
       </div>
     </div>
     <div class="header-bottom">
-      <div class="logo">
+      <h1 class="logo">
         <router-link to="/"><img src="./images/Logo.png" alt="" /></router-link>
-      </div>
+      </h1>
       <div class="search">
         <input type="text" />
         <button>搜索</button>
