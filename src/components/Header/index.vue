@@ -5,7 +5,8 @@
         <div class="header-login">
           <p>尚硅谷欢迎您!</p>
           <p>
-            请<router-link to="/login/phoneLogin" class="login">登录</router-link
+            请<router-link to="/login/phoneLogin" class="login"
+              >登录</router-link
             ><router-link to="/register" class="register">免费注册</router-link>
           </p>
         </div>
@@ -27,10 +28,10 @@
       <h1 class="logo">
         <router-link to="/"><img src="./images/Logo.png" alt="" /></router-link>
       </h1>
-      <div class="search">
-        <input type="text" />
+      <form class="search" @submit.prevent="serach">
+        <input type="text" v-model="searchText" />
         <button>搜索</button>
-      </div>
+      </form>
     </div>
     <div></div>
   </header>
@@ -39,6 +40,45 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      searchText: "",
+    };
+  },
+  methods: {
+    /* serach() {
+      const location =
+        "/search" + (this.searchText ? `/${this.searchText}` : "");
+      console.log(location)
+      this.$router.push(location);
+    }, */
+    serach() {
+      const { searchText } = this;
+      /* if (searchText) {
+        this.$router.push({
+          name: "search",
+          params: {
+            searchText,
+          },
+        });
+      } else {
+        this.$router.push("/search");
+      } */
+      const location = {
+        name:'search',
+      }
+      if(searchText){
+        location.params={
+          searchText
+        }
+      }
+      this.$router.push(location,/* res=>{
+        console.log(res)
+      },err=>{
+        console.log(err)
+      } */)
+    },
+  },
 };
 </script>
 

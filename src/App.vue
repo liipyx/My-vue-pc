@@ -2,7 +2,8 @@
   <div>
     <Header></Header>
     <Router-view></Router-view>
-    <Footer></Footer>
+    <!-- <Footer v-if="$route.path !== '/register' && $route.path !== '/login'"></Footer> -->
+    <Footer v-if="!$route.meta.isFooterHide"></Footer>
   </div>
 </template>
 
