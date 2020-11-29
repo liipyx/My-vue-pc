@@ -18,7 +18,7 @@ instance.interceptors.response.use(
   (response) => {
     NProgress.done();
     if (response.data.code === 200) {
-      Message.success("登录成功，一年后跳转");
+      Message.success("请求成功");
       return response.data.data;
     }
     const message = response.data.message;
