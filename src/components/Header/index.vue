@@ -3,12 +3,13 @@
     <div class="header-top">
       <div class="header-bar">
         <div class="header-login">
-          <p>尚硅谷欢迎您!</p>
-          <p>
-            请<router-link to="/login/phoneLogin" class="login"
+          <p>尚品汇欢迎您!</p>
+          <p v-if='show'>
+            请<router-link to="/login" class="login"
               >登录</router-link
             ><router-link to="/register" class="register">免费注册</router-link>
           </p>
+          <p v-else-if="!show">{{$route.params.user}} <a>退出</a></p>
         </div>
         <div class="header-list">
           <ul>
@@ -43,6 +44,7 @@ export default {
   data() {
     return {
       searchText: "",
+      show:true
     };
   },
   methods: {
@@ -79,6 +81,15 @@ export default {
       } */)
     },
   },
+  watch:{
+    $route:{
+      handler(newVal){
+        if(newVal.params.user){
+          this.show = false
+        }
+      }
+    }
+  }
 };
 </script>
 

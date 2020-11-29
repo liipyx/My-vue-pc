@@ -36,6 +36,7 @@ export default {
         .then((res) => {
           console.log(res);
           // this.$message("登录成功,一年后跳转");
+          this.$router.push(`/home${res.name}`)
         })
         .catch((err) => {
           console.log(err)

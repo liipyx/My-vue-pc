@@ -5,7 +5,7 @@ import Home from "../views/Home";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import Search from "../views/Search";
-import PhoneLogin from "../views/Login/PhoneLogin";
+// import PhoneLogin from "../views/Login/PhoneLogin";
 
 const push = VueRouter.prototype.push;
 VueRouter.prototype.push = function(location, onComplete, onAbort = () => {}) {
@@ -25,7 +25,7 @@ export default new VueRouter({
       component: Home,
     },
     {
-      path: "/home",
+      path: "/home:user?",
       component: Home,
     },
     {
@@ -34,7 +34,7 @@ export default new VueRouter({
       /* meta: {
         isFooterHide: true,
       }, */
-      children: [
+      /* children: [
         {
           path: "phoneLogin",
           component: PhoneLogin,
@@ -42,7 +42,7 @@ export default new VueRouter({
             isFooterHide: true,
           },
         },
-      ],
+      ], */
     },
     {
       path: "/register",

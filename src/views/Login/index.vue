@@ -3,14 +3,11 @@
     <div class="login-wrap">
       <div class="login">
         <div class="login-header">
-          <p><router-link to="/login/scanLogin">扫描登录</router-link></p>
-          <p>
-            <router-link to="/login/PhoneLogin" active-class="active"
-              >账户登录</router-link
-            >
-          </p>
+          <p @click="toScanLogin" ref="scan">扫描登录</p>
+          <p @click="toPhoneLogin" ref="phone" class="active">账户登录</p>
         </div>
-        <router-view></router-view>
+        <component :is="showName"></component>
+        <!-- <router-view></router-view> -->
         <!-- <div class="phone">
           <span></span>
           <input type="text" />
@@ -31,8 +28,43 @@
 </template>
 
 <script>
+import PhoneLogin from "./PhoneLogin";
+import ScanLogin from "./ScanLogin";
+
 export default {
   name: "Login",
+  data() {
+    return {
+      showName: PhoneLogin,
+      
+    };
+  },
+  methods: {
+    toPhoneLogin() {
+      this.showName = PhoneLogin;
+    },
+    toScanLogin() {
+      this.showName = ScanLogin;
+    },
+  },
+  watch: {
+    showName: {
+      handler() {
+        if (this.showName == PhoneLogin) {
+          this.$refs.phone.className = 'active'
+          this.$refs.scan.className = ''
+        }
+        if (this.showName == ScanLogin) {
+          this.$refs.scan.className = 'active'
+          this.$refs.phone.className = ''
+        }
+      },
+      // immediate: true,
+    },
+  },
+  mounted(){
+    // this.$refs.phone.style.color = "indianred";
+  }
 };
 </script>
 
@@ -77,7 +109,7 @@ section {
     }
   }
 }
-.active {
+.active{
   color: indianred;
 }
 </style>
