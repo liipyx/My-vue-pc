@@ -31,6 +31,9 @@ export default new VueRouter({
     {
       path: "/login",
       component: Login,
+      meta: {
+        isFooterHide: true,
+      },
       /* meta: {
         isFooterHide: true,
       }, */

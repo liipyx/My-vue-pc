@@ -1,10 +1,17 @@
 <template>
-  <div>search...</div>
+  <div>
+    <CategoryList></CategoryList>
+  </div>
 </template>
 
 <script>
+import CategoryList from "../../components/CategoryList"
+
 export default {
   name: "Search",
+  components:{
+    CategoryList
+  }
 };
 </script>
 

@@ -4,12 +4,11 @@
       <div class="header-bar">
         <div class="header-login">
           <p>尚品汇欢迎您!</p>
-          <p v-if='show'>
-            请<router-link to="/login" class="login"
-              >登录</router-link
+          <p v-if="show">
+            请<router-link to="/login" class="login">登录</router-link
             ><router-link to="/register" class="register">免费注册</router-link>
           </p>
-          <p v-else-if="!show">{{$route.params.user}} <a>退出</a></p>
+          <p v-else-if="!show">{{ $route.params.user }} <a>退出</a></p>
         </div>
         <div class="header-list">
           <ul>
@@ -44,7 +43,7 @@ export default {
   data() {
     return {
       searchText: "",
-      show:true
+      show: true,
     };
   },
   methods: {
@@ -67,29 +66,42 @@ export default {
         this.$router.push("/search");
       } */
       const location = {
-        name:'search',
+        name: "search",
+      };
+      //params参数
+      if (searchText) {
+        location.params = {
+          searchText,
+        };
       }
-      if(searchText){
-        location.params={
-          searchText
-        }
-      }
-      this.$router.push(location,/* res=>{
+      /* location.params = {  //不判断不行
+        searchText,
+      }; */
+
+      // query参数
+      /* const { categoryName } = this.$route.query;
+      if(categoryName){
+        location.query = this.$route.query;
+      } */
+      location.query = this.$route.query; //不判断也可？
+      this.$router.push(
+        location /* res=>{
         console.log(res)
       },err=>{
         console.log(err)
-      } */)
+      } */
+      );
     },
   },
-  watch:{
-    $route:{
-      handler(newVal){
-        if(newVal.params.user){
-          this.show = false
+  watch: {
+    $route: {
+      handler(newVal) {
+        if (newVal.params.user) {
+          this.show = false;
         }
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
