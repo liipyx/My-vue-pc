@@ -8,6 +8,8 @@ import "./styles/reset.css";
 import "./styles/index.css";
 import './plugins/element.js'
 
+import "./mock/mockServer"
+
 Vue.config.productionTip = false;
 
 new Vue({

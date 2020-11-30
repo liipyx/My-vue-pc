@@ -15,9 +15,9 @@
           <h3 class="small" v-html="item"></h3>
         </el-carousel-item> -->
 
-          <el-carousel-item v-for="item in imgUrls" :key="item.id">
+          <el-carousel-item v-for="item in banners" :key="+item.id">
             <h3 class="small">
-              <img :src="item.url" alt="" />
+              <img :src="item.imgUrl" alt="" />
             </h3>
           </el-carousel-item>
         </el-carousel>
@@ -27,21 +27,23 @@
 </template>
 
 <script>
-import imgUrl1 from "./images/banner1.jpg";
+/* import imgUrl1 from "./images/banner1.jpg";
 import imgUrl2 from "./images/banner2.jpg";
 import imgUrl3 from "./images/banner3.jpg";
-import imgUrl4 from "./images/banner4.jpg";
+import imgUrl4 from "./images/banner4.jpg"; */
+
+import {mapState,mapActions} from "vuex"
 
 export default {
   name: "ContainerList",
   data() {
     return {
-      imgUrls: [
+      /* imgUrls: [
         { id: 1, url: imgUrl1 },
         { id: 2, url: imgUrl2 },
         { id: 3, url: imgUrl3 },
         { id: 4, url: imgUrl4 },
-      ],
+      ], */
       /* nums:[1,2.3,4],
       urls:["./images/banner1.jpg","./images/banner2.jpg","./images/banner3.jpg","./images/banner4.jpg"],
       imgs: [
@@ -52,6 +54,17 @@ export default {
       ], */
     };
   },
+  computed:{
+    ...mapState({
+      banners : state=>state.home.banners
+    })
+  },
+  methods:{
+    ...mapActions(['getBanners'])
+  },
+  mounted(){
+    this.getBanners()
+  }
 };
 </script>
 

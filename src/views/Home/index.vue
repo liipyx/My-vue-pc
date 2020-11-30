@@ -2,20 +2,20 @@
   <div>
     <!-- <div class="big-container"> -->
       <CategoryList></CategoryList>
-      <!-- <ContainerList></ContainerList> -->
+      <ContainerList></ContainerList>
     <!-- </div> -->
   </div>
 </template>
 
 <script>
 import CategoryList from "../../components/CategoryList";
-// import ContainerList from "./ContainerList";
+import ContainerList from "./ContainerList";
 
 export default {
   name: "Home",
   components: {
     CategoryList,
-    // ContainerList,
+    ContainerList,
   },
 };
 </script>
