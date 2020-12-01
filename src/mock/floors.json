@@ -13,7 +13,7 @@
     "carouselList|3": [
       {
         "id|+1": 1,
-        "imgUrl": "@image()"
+        "imgUrl": "@image('328x360','@color')"
       }
     ],
     "recommendList|4": ["@image()"],

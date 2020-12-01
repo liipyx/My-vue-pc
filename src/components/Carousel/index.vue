@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container">
+  <div class="swiper-container" ref="swiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="item in carouselList" :key="item.id">
         <img :src="item.imgUrl" alt="" />
@@ -32,9 +32,9 @@ export default {
   },
   watch: {
     carouselList() {
-      if(this.swiper) return
+      if (this.swiper) return;
       this.$nextTick(() => {
-        new Swiper(".swiper-container", {
+        new Swiper(this.$refs.swiper, {
           loop: true, // 循环模式选项
 
           // 如果需要分页器
@@ -54,6 +54,26 @@ export default {
         });
       });
     },
+  },
+  mounted() {
+    new Swiper(this.$refs.swiper, {
+      loop: true, // 循环模式选项
+
+      // 如果需要分页器
+      pagination: {
+        el: ".swiper-pagination",
+      },
+
+      autoplay: {
+        delay: 2000,
+      },
+
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
   },
 };
 </script>

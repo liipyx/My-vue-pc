@@ -19,5 +19,5 @@ Mock.mock("/mock/banners", "get", {
 }); */
 Mock.mock("/mock/floors", "get", {
   code: 200,
-  data: floors,
+  "data|2-4": floors,
 });
