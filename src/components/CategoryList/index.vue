@@ -223,6 +223,7 @@ export default {
   justify-content: space-evenly;
   background-color: #f7f7f7;
   position: absolute;
+  z-index: 999;
   left: 0;
   top: 47px;
   a {

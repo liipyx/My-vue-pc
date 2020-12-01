@@ -2,75 +2,74 @@
   <div class="container">
     <div class="img-container">
       <div class="block">
-        <el-carousel trigger="click" height="455px">
-          <!-- <el-carousel-item v-for="item in nums" :key="item">
-        <h3 class="small">
-        <img src="./images/banner1.jpg" alt="">
-        <img :src="`./images/banner${item}.jpg`">
-        <img :src="item" alt="">
-        </h3>
-        </el-carousel-item> -->
-
-          <!-- <el-carousel-item v-for="item in img" :key="item">
-          <h3 class="small" v-html="item"></h3>
-        </el-carousel-item> -->
-
-          <el-carousel-item v-for="item in banners" :key="+item.id">
-            <h3 class="small">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="item in banners" :key="item.id">
               <img :src="item.imgUrl" alt="" />
-            </h3>
-          </el-carousel-item>
-        </el-carousel>
+            </div>
+          </div>
+          <!-- 如果需要分页器 -->
+          <div class="swiper-pagination"></div>
+
+          <!-- 如果需要导航按钮 -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+
+          <!-- 如果需要滚动条 -->
+          <div class="swiper-scrollbar"></div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-/* import imgUrl1 from "./images/banner1.jpg";
-import imgUrl2 from "./images/banner2.jpg";
-import imgUrl3 from "./images/banner3.jpg";
-import imgUrl4 from "./images/banner4.jpg"; */
+import { mapState, mapActions } from "vuex";
+import Swiper, { Navigation, Pagination, Autoplay } from "swiper";
+import "swiper/swiper-bundle.min.css";
 
-import {mapState,mapActions} from "vuex"
+Swiper.use([Navigation, Pagination, Autoplay]);
 
 export default {
   name: "ContainerList",
-  data() {
-    return {
-      /* imgUrls: [
-        { id: 1, url: imgUrl1 },
-        { id: 2, url: imgUrl2 },
-        { id: 3, url: imgUrl3 },
-        { id: 4, url: imgUrl4 },
-      ], */
-      /* nums:[1,2.3,4],
-      urls:["./images/banner1.jpg","./images/banner2.jpg","./images/banner3.jpg","./images/banner4.jpg"],
-      imgs: [
-        "<img scr='./images/banner1.jpg'></img>",
-        "<img scr='./images/banner2.jpg'></img>",
-        "<img scr='./images/banner3.jpg'></img>",
-        "<img scr='./images/banner4.jpg'></img>",
-      ], */
-    };
-  },
-  computed:{
+  computed: {
     ...mapState({
-      banners : state=>state.home.banners
-    })
+      banners: (state) => state.home.banners,
+    }),
   },
-  methods:{
-    ...mapActions(['getBanners'])
+  methods: {
+    ...mapActions(["getBanners"]),
   },
-  mounted(){
-    this.getBanners()
-  }
+  async mounted() {
+    await this.getBanners();
+    this.$nextTick(() => {
+      new Swiper(".swiper-container", {
+        loop: true, // 循环模式选项
+
+        // 如果需要分页器
+        pagination: {
+          el: ".swiper-pagination",
+        },
+
+        autoplay: {
+          delay: 2000,
+        },
+
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    });
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.container{
+.container {
   width: 1200px;
+  height: 460px;
   margin: 0 auto;
   position: relative;
 }
@@ -83,7 +82,11 @@ export default {
   left: 210px;
   margin: 5px 0 0 5px;
 }
-.small img {
-  width: 100%;
+.swiper-slide {
+  overflow: hidden;
+  height: 455px;
+  img {
+    width: 100%;
+  }
 }
 </style>

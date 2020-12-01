@@ -15,3 +15,10 @@ export const bannerRequest = () => {
   });
 };
 
+export const floorRequest = () => {
+  return mockRequest({
+    method: "GET",
+    url:"/floors"
+  })
+}
+

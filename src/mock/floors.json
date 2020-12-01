@@ -1,0 +1,9 @@
+[
+  {
+    "bigTitle": "@ctitle(4)",
+    "subId|+1": 10,
+    "subTitle|4-8": ["@ctitle(3,6)"],
+    "imgId|+1": 7,
+    "images|7": ["@image('400x400',@color)"]
+  }
+]
