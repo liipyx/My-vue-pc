@@ -15,21 +15,35 @@
     <div class="imgLIst">
       <div class="keywords">
         <ul class="words">
-          <li></li>
+          <li v-for="(keyword, index) in floor.keywords" :key="index">
+            {{ keyword }}
+          </li>
         </ul>
-        <div class="key-img"></div>
+        <div class="key-img">
+          <img :src="floor.imgUrl" alt="">
+        </div>
       </div>
       <div class="carousel-wrap">
         <Carousel :carouselList="floor.carouselList"></Carousel>
       </div>
       <div class="small-wrap">
-        <div class="small"></div>
-        <div class="small"></div>
+        <div class="small">
+          <img :src="floor.recommendList[0]" alt="">
+        </div>
+        <div class="small">
+          <img :src="floor.recommendList[1]" alt="">
+        </div>
       </div>
-      <div class="middle"></div>
+      <div class="middle">
+        <img :src="floor.bigImg" alt="">
+      </div>
       <div class="small-wrap">
-        <div class="small"></div>
-        <div class="small"></div>
+        <div class="small">
+          <img :src="floor.recommendList[2]" alt="">
+        </div>
+        <div class="small">
+          <img :src="floor.recommendList[3]" alt="">
+        </div>
       </div>
     </div>
   </section>
@@ -37,16 +51,16 @@
 
 <script>
 // import { mapState, mapActions } from "vuex";
-import Carousel from "../../../components/Carousel"
+import Carousel from "../../../components/Carousel";
 
 export default {
   name: "Floor",
-  props:{
-    floor:Object
+  props: {
+    floor: Object,
   },
-  components:{
-    Carousel
-  }
+  components: {
+    Carousel,
+  },
   /* computed: {
     ...mapState({
       floor: (state) => state.home.floors[0],
@@ -98,14 +112,27 @@ export default {
 .keywords {
   width: 218px;
   height: 100%;
-  background-color: ivory;
+  background-color:#f7f7f7;
 }
-.words{
-  height: 105px;
+.words {
+  height: 80px;
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  li {
+    width: 83px;
+    height: 26px;
+    line-height: 26px;
+    margin: 0 10px;
+    text-align: center;
+    border-bottom: 1px solid #e4e4e4;
+  }
 }
 .key-img {
   width: 100%;
-  height: 255px;
+  height: 250px;
   background-color: lightcyan;
 }
 
@@ -119,7 +146,7 @@ export default {
   width: 218px;
   height: 100%;
 }
-.small{
+.small {
   height: 50%;
   background-color: lightsteelblue;
 }

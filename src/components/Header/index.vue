@@ -29,7 +29,7 @@
         <router-link to="/"><img src="./images/Logo.png" alt="" /></router-link>
       </h1>
       <form class="search" @submit.prevent="serach">
-        <input type="text" v-model="searchText" />
+        <input type="text" v-model="searchText" @keyup.enter="serach" />
         <button>搜索</button>
       </form>
     </div>

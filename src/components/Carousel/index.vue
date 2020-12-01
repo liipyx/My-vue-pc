@@ -30,50 +30,39 @@ export default {
       required: true,
     },
   },
+  methods: {
+    initSwiper() {
+      new Swiper(this.$refs.swiper, {
+        loop: true, // 循环模式选项
+
+        // 如果需要分页器
+        pagination: {
+          el: ".swiper-pagination",
+          clickable : true
+        },
+
+        autoplay: {
+          delay: 2000,
+        },
+
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    },
+  },
   watch: {
     carouselList() {
       if (this.swiper) return;
       this.$nextTick(() => {
-        new Swiper(this.$refs.swiper, {
-          loop: true, // 循环模式选项
-
-          // 如果需要分页器
-          pagination: {
-            el: ".swiper-pagination",
-          },
-
-          autoplay: {
-            delay: 2000,
-          },
-
-          // 如果需要前进后退按钮
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-        });
+        this.initSwiper();
       });
     },
   },
   mounted() {
-    new Swiper(this.$refs.swiper, {
-      loop: true, // 循环模式选项
-
-      // 如果需要分页器
-      pagination: {
-        el: ".swiper-pagination",
-      },
-
-      autoplay: {
-        delay: 2000,
-      },
-
-      // 如果需要前进后退按钮
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
+    this.initSwiper();
   },
 };
 </script>

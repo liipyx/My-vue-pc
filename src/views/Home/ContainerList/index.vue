@@ -23,8 +23,8 @@ export default {
   components: {
     Carousel,
   },
-  async mounted() {
-    await this.getBanners();
+  mounted() {
+    this.getBanners();
   },
 };
 </script>
