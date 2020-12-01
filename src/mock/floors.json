@@ -1,9 +1,22 @@
 [
   {
-    "bigTitle": "@ctitle(4)",
-    "subId|+1": 10,
-    "subTitle|4-8": ["@ctitle(3,6)"],
-    "imgId|+1": 7,
-    "images|7": ["@image('400x400',@color)"]
+    "id|+1": 1,
+    "name": "@ctitle(4)",
+    "keywords|6": ["@ctitle(3,5)"],
+    "imgUrl": "@image()",
+    "navList|5-8": [
+      {
+        "url": "#",
+        "text": "@ctitle(2,5)"
+      }
+    ],
+    "carouselList|3": [
+      {
+        "id|+1": 1,
+        "imgUrl": "@image()"
+      }
+    ],
+    "recommendList|4": ["@image()"],
+    "bigImg": "@image()"
   }
 ]

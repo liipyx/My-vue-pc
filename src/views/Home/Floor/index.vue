@@ -1,9 +1,9 @@
 <template>
   <section class="floor">
     <div class="title">
-      <p class="big_title">{{floor.bigTitle}}</p>
+      <p class="big_title">{{floor.name}}</p>
       <ul class="sub-title">
-        <li class="sub-item" v-for="item in floor.subTitle" :key="item">{{item}}</li>
+        <li class="sub-item" v-for="(item,index) in floor.navList" :key="index">{{item.text}}</li>
       </ul>
     </div>
     <div class="imgLIst"></div>
