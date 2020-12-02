@@ -84,13 +84,14 @@ export default {
         location.query = this.$route.query;
       } */
       location.query = this.$route.query; //不判断也可？
-      this.$router.push(
-        location /* res=>{
-        console.log(res)
-      },err=>{
-        console.log(err)
-      } */
-      );
+      if (this.$route.path==="/" || this.$route.path.indexOf("/home") > -1) {
+        this.$router.push(location);
+      }else{
+        this.$router.replace(location);
+      }
+    },
+    clearSearchText() {
+      this.searchText = "";
     },
   },
   watch: {
@@ -101,6 +102,9 @@ export default {
         }
       },
     },
+  },
+  mounted() {
+    this.$bus.$on("clearSearchText", this.clearSearchText);
   },
 };
 </script>

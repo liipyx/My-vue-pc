@@ -32,6 +32,7 @@ export default {
   },
   mounted() {
     this.getFloors();
+    this.$bus.$emit('clearSearchText')
   },
 };
 </script>

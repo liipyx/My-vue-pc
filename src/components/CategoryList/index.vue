@@ -168,11 +168,15 @@ export default {
         }
       }
       //判断又没params参数
-      /* if(this.$route.params){
+      if(this.$route.params){
         location.params = this.$route.params
-      } */
+      }
       location.params = this.$route.params //不判断也可？
-      this.$router.push(location);
+      if(this.$route.path === "/" || this.$route.path.indexOf("/home") > -1){
+        this.$router.push(location);
+      }{
+        this.$router.replace(location);
+      }
     },
   },
   mounted() {
