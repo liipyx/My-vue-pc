@@ -43,6 +43,7 @@ export default {
 
         autoplay: {
           delay: 2000,
+          disableOnInteraction: false, // 当用户点击下一页时，仍会开启自动轮播
         },
 
         // 如果需要前进后退按钮

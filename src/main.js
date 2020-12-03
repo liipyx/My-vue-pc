@@ -6,6 +6,8 @@ import store from "./store"
 
 import "./styles/reset.css";
 import "./styles/index.css";
+import "./styles/iconfont.css"
+
 import './plugins/element.js'
 
 import "./mock/mockServer"
