@@ -26,17 +26,46 @@
     <div class="productions-wrap">
       <div class="sort-wrap">
         <ul class="sort">
-          <li class="active init">
-            <a>综合<i class="iconfont icon-Arrowdown"></i></a>
+          <li
+            :class="{ init: true, active: options.order.split(':')[0] === '1' }"
+            @click="setOrder('1')"
+          >
+            <a
+              >综合<i
+                :class="{
+                  iconfont: true,
+                  'icon-arrowdown': isDown,
+                  'icon-arrow-up': !isDown,
+                }"
+              ></i
+            ></a>
           </li>
           <li><a>销量</a></li>
           <li><a>新品</a></li>
           <li><a>评价</a></li>
-          <li class="price">
+          <li
+            :class="{
+              price: true,
+              active: options.order.split(':')[0] === '2',
+            }"
+            @click="setOrder('2')"
+          >
             <a
               >价格<span
-                ><i class="iconfont icon-sort-asc"></i
-                ><i class="iconfont icon-sortdesc"></i></span
+                ><i
+                  :class="{
+                    iconfont: true,
+                    'icon-sort-asc': true,
+                    priceSort: !isLight,
+                  }"
+                ></i
+                ><i
+                  :class="{
+                    iconfont: true,
+                    'icon-sortdesc': true,
+                    priceSort: isLight,
+                  }"
+                ></i></span
             ></a>
           </li>
         </ul>
@@ -92,12 +121,14 @@ export default {
         category3Id: "",
         categoryName: "",
         keyword: "",
-        order: "",
+        order: "1:desc",
         pageNo: 1,
         pageSize: 5,
         props: [],
         trademark: "",
       },
+      isDown: true,
+      isLight: true,
     };
   },
   components: {
@@ -109,7 +140,7 @@ export default {
   },
   methods: {
     ...mapActions(["getProductionList"]),
-    getProductions(pageNo=1) {
+    getProductions(pageNo = 1) {
       const {
         category1Id,
         category2Id,
@@ -124,7 +155,7 @@ export default {
         category3Id,
         categoryName,
         keyword,
-        pageNo
+        pageNo,
       };
       this.options = options;
       this.getProductionList(options);
@@ -165,14 +196,55 @@ export default {
         params: this.$route.params,
       });
     },
-    handleCurrentChange(pageNo){
-      this.options.pageNo = pageNo
-      this.getProductions(pageNo)
+    //分页器
+    handleCurrentChange(pageNo) {
+      this.options.pageNo = pageNo;
+      this.getProductions(pageNo);
     },
-    handleSizeChange(pageSize){
-      this.options.pageSize = pageSize
+    handleSizeChange(pageSize) {
+      this.options.pageSize = pageSize;
+      this.getProductions();
+    },
+    //排序
+    setOrder(order) {
+      let [orderNumber, orderType] = this.options.order.split(":");
+      if (orderNumber === order) {
+        //综合
+        if (orderNumber === "1") {
+          this.isDown = !this.isDown;
+          orderType = this.isDown === true? "desc" : "asc"
+        }
+        //价格
+        if (orderNumber === "2") {
+          this.isLight = !this.isLight;
+          orderType = this.isLight === true? "desc" : "asc"
+        }
+      } else {
+        orderNumber = order
+        if(order === '1'){
+          this.isLight = true
+          orderType = this.isDown === true? "desc" : "asc"
+        }else{
+          this.isDown = true
+          orderType = this.isLight === true? "desc" : "asc"
+        }
+        /* this.isDown = true;
+        this.isLight = true
+        orderNumber = order;
+        //综合
+        if (orderNumber === "1") {
+          orderType = this.isDown === true? "desc" : "asc"
+        }
+        //价格
+        if (orderNumber === "2") {
+          orderType = this.isLight === true? "desc" : "asc"
+        } */
+      }
+      this.options.order = `${orderNumber}:${orderType}`;
       this.getProductions()
-    }
+
+      console.log(this.options.order);
+    },
   },
   watch: {
     $route() {
@@ -236,8 +308,13 @@ export default {
   }
   .active {
     background-color: indianred;
-    a,
+    a {
+      color: #fff;
+    }
     .iconfont {
+      color: rgb(231, 227, 227);
+    }
+    .priceSort {
       color: #fff;
     }
   }
