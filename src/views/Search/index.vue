@@ -90,7 +90,15 @@
           </li>
         </ul>
       </div>
-      <el-pagination
+      <Pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="options.pageNo"
+        :pager-count="9"
+        :page-size="5"
+        :total="total"
+      ></Pagination>
+      <!-- <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="options.pageNo"
@@ -100,7 +108,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
-      </el-pagination>
+      </el-pagination> -->
     </div>
   </div>
 </template>
@@ -108,6 +116,8 @@
 <script>
 import CategoryList from "../../components/CategoryList";
 import SearchSlector from "../Search/SearchSlector";
+
+import Pagination from "../../components/Pagination";
 
 import { mapGetters, mapActions } from "vuex";
 
@@ -134,6 +144,7 @@ export default {
   components: {
     CategoryList,
     SearchSlector,
+    Pagination,
   },
   computed: {
     ...mapGetters(["goodsList", "total"]),
@@ -161,7 +172,6 @@ export default {
       this.getProductionList(options);
     },
     addProp(prop) {
-      console.log(prop);
       if (this.options.props.indexOf(prop) > -1) return;
       this.options.props.push(prop);
       this.getProductions();
@@ -171,6 +181,7 @@ export default {
       this.getProductions();
     },
     addBrand(trademark) {
+      if (this.options.trademark) return;
       this.options.trademark = trademark;
       this.getProductions();
     },
@@ -212,21 +223,21 @@ export default {
         //综合
         if (orderNumber === "1") {
           this.isDown = !this.isDown;
-          orderType = this.isDown === true? "desc" : "asc"
+          orderType = this.isDown === true ? "desc" : "asc";
         }
         //价格
         if (orderNumber === "2") {
           this.isLight = !this.isLight;
-          orderType = this.isLight === true? "desc" : "asc"
+          orderType = this.isLight === true ? "desc" : "asc";
         }
       } else {
-        orderNumber = order
-        if(order === '1'){
-          this.isLight = true
-          orderType = this.isDown === true? "desc" : "asc"
-        }else{
-          this.isDown = true
-          orderType = this.isLight === true? "desc" : "asc"
+        orderNumber = order;
+        if (order === "1") {
+          this.isLight = true;
+          orderType = this.isDown === true ? "desc" : "asc";
+        } else {
+          this.isDown = true;
+          orderType = this.isLight === true ? "desc" : "asc";
         }
         /* this.isDown = true;
         this.isLight = true
@@ -241,7 +252,7 @@ export default {
         } */
       }
       this.options.order = `${orderNumber}:${orderType}`;
-      this.getProductions()
+      this.getProductions();
 
       console.log(this.options.order);
     },

@@ -4,7 +4,7 @@
       <p class="header-left">注册新用户</p>
       <p class="header-right">
         我有账号，去
-        <router-link to="/login/phoneLogin" class="login">登录</router-link>
+        <router-link to="/login" class="login">登录</router-link>
       </p>
     </div>
     <div class="input-wrap">
