@@ -7,6 +7,7 @@ import store from "./store"
 import "./styles/reset.css";
 import "./styles/index.css";
 import "./styles/iconfont.css"
+import "swiper/swiper-bundle.min.css";
 
 import './plugins/element.js'
 

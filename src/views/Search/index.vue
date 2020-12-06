@@ -74,7 +74,7 @@
         <ul class="production-list">
           <li class="production-item" v-for="good in goodsList" :key="good.id">
             <div class="img-wrap">
-              <a><img class="img" :src="good.defaultImg" alt="" /></a>
+              <router-link :to="`/detail/${good.id}`"><img class="img" :src="good.defaultImg" alt="" /></router-link>
             </div>
             <div class="middle">
               <p class="pro-price">￥{{ good.price }}</p>
