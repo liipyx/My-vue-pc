@@ -5,8 +5,9 @@ import Home from "../views/Home";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import Search from "../views/Search";
-// import PhoneLogin from "../views/Login/PhoneLogin";
 import Detail from "../views/Detail"
+import AddCartSuccess from "../views/AddCartSuccess"
+import ShopCart from "../views/ShopCart"
 
 const push = VueRouter.prototype.push;
 VueRouter.prototype.push = function(location, onComplete, onAbort = () => {}) {
@@ -64,7 +65,17 @@ export default new VueRouter({
       name: 'detail',
       path: '/detail/:id',
       component:Detail
-    }
+    },
+    {
+      name: 'addCartSuccess',
+      path: '/addCartSuccess',
+      component:AddCartSuccess
+    },
+    {
+      name: 'shopcart',
+      path: '/shopcart',
+      component:ShopCart
+    },
   ],
   scrollBehavior() {
     return {

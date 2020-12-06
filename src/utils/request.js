@@ -3,6 +3,9 @@ import { Message } from "element-ui";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import getUserTempId from "./getUserTempId"
+
+const userTempId = getUserTempId()
 
 const instance = axios.create({
   baseURL: "/api",
@@ -11,6 +14,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   NProgress.start();
+  config.headers.userTempId = userTempId
   return config;
 });
 

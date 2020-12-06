@@ -63,13 +63,12 @@
         </div>
         <div class="add-cart">
           <el-input-number
-            v-model="num"
+            v-model="skuNum"
             controls-position="right"
-            @change="handleChange"
             :min="1"
-            :max="10"
+            :max="100"
           ></el-input-number>
-          <div class="add-btn">加入购物车</div>
+          <div class="add-btn" @click="addShopcart">加入购物车</div>
         </div>
       </div>
     </section>
@@ -88,19 +87,27 @@ export default {
   data() {
     return {
       currentImgIndex: 0,
-      num: 1,
+      skuNum: 1,
     };
   },
   computed: {
     ...mapGetters(["skuInfo", "categoryView", "spuSaleAttrList"]),
   },
   methods: {
-    ...mapActions(["getDetailInfo"]),
+    ...mapActions(["getDetailInfo", "addShopcart"]),
     updateImgIndex(index) {
       this.currentImgIndex = index;
     },
-    handleChange(value) {
-      this.num + value;
+    async addShopcart() {
+      try {
+        await this.addShopcart({ 
+          skuId: this.skuInfo.id, 
+          skuNum: this.skuNum 
+          });
+        this.$router.push(`/addCartSuccess?skuNum=${this.skuNum}`);
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
   mounted() {
@@ -214,7 +221,7 @@ export default {
 .add-cart {
   margin-top: 10px;
   display: flex;
-  .el-input__inner{
+  .el-input__inner {
     width: 40px;
   }
 }
@@ -226,5 +233,6 @@ export default {
   padding: 0 20px;
   color: #fff;
   background-color: indianred;
+  cursor: pointer;
 }
 </style>
