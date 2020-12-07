@@ -68,7 +68,7 @@
             :min="1"
             :max="100"
           ></el-input-number>
-          <div class="add-btn" @click="addShopcart">加入购物车</div>
+          <div class="add-btn" @click="add">加入购物车</div>
         </div>
       </div>
     </section>
@@ -98,7 +98,7 @@ export default {
     updateImgIndex(index) {
       this.currentImgIndex = index;
     },
-    async addShopcart() {
+    async add() {
       try {
         await this.addShopcart({ 
           skuId: this.skuInfo.id, 

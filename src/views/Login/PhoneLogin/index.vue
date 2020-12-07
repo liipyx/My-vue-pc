@@ -1,47 +1,65 @@
 <template>
-  <div class="phone-login">
+  <form class="phone-login" @submit.prevent="login">
     <div class="phone">
       <span></span>
-      <input type="text" placeholder="手机号" v-model="phone" />
+      <input type="text" placeholder="手机号" v-model="user.phone" />
     </div>
     <div class="password">
       <span></span>
-      <input type="text" placeholder="请输入密码" v-model="password" />
+      <input type="text" placeholder="请输入密码" v-model="user.password" />
     </div>
     <div class="login-bottom">
-      <div class="check"><input type="checkbox" />自动登录</div>
+      <div class="check"><input type="checkbox" v-model="isAutoLogin" />自动登录</div>
       <p>忘记密码?</p>
     </div>
-    <button class="login-button" @click="login">登 录</button>
+    <button type="submit" class="login-button">登 录</button>
     <div class="immediate">
       <router-link to="/register">立即注册</router-link>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
-import { loginRequest } from "../../../api/user";
+import { mapState } from "vuex";
+
 export default {
   name: "PhoneLogin",
   data() {
     return {
-      phone: "",
-      password: "",
+      user: {
+        phone: "",
+        password: "",
+      },
+      isLogining: false,
+      isAutoLogin:true
     };
   },
+  created() {
+    if (this.token) {
+      this.$router.replace("/");
+    }
+  },
+  computed: {
+    ...mapState({
+      token: (state) => state.user.token,
+      name:(state) => state.user.name
+    }),
+  },
   methods: {
-    login() {
-      console.log(this.phone, this.password);
-      loginRequest(this.phone, this.password)
-        .then((res) => {
-          console.log(res);
-          // this.$message("登录成功,一年后跳转");
-          this.$router.push(`/home${res.name}`)
-        })
-        .catch((err) => {
-          console.log(err)
-          // this.$message(err);
-        });
+    async login() {
+      try {
+        if (this.isLogining) return;
+        this.isLogining = true;
+        const { phone, password } = this.user;
+        await this.$store.dispatch("reqLogin", { phone, password });
+        if(this.isAutoLogin){
+          localStorage.setItem("token",this.token)
+          localStorage.setItem("name",this.name)
+        }
+        this.$router.replace("/");
+      } catch {
+        this.isLogining = false;
+      }
     },
   },
 };

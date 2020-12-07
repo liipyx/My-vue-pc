@@ -11,14 +11,16 @@
     </div>
     <ul class="cart-list">
       <li class="cart-item" v-for="good in shopcartList" :key="good.id">
-        <div class="check" value="good.isChecked"><input type="checkbox" /></div>
+        <div class="check" value="good.isChecked">
+          <input type="checkbox" />
+        </div>
         <div class="img-wrap">
           <div class="img">
             <img :src="good.imgUrl" />
           </div>
-          <p class="good-name">{{good.skuName}}</p>
+          <p class="good-name">{{ good.skuName }}</p>
         </div>
-        <div class="price">{{good.skuPrice}}</div>
+        <div class="price">{{ good.skuPrice }}</div>
         <div class="count-btn">
           <el-input-number
             size="mini"
@@ -28,18 +30,31 @@
             label="描述文字"
           ></el-input-number>
         </div>
-        <div class="total-price">{{good.skuNum * good.cartPrice}}</div>
+        <div class="total-price">{{ good.skuNum * good.cartPrice }}</div>
         <div class="handle-btn">
           <a href="">删除</a>
           <a href="">移到收藏</a>
         </div>
       </li>
     </ul>
+    <div class="bottom">
+      <div class="left">
+        <input type="checkbox" />
+        <p>删除选中的商品</p>
+        <p>移到我的关注</p>
+        <p>清除下架商品</p>
+      </div>
+      <div class="right">
+        <p>已选择 {{ totalCount }} 件商品</p>
+        <p>总价（不含运费） ： {{ totalPrice }}</p>
+        <button>结算</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import {mapState,mapActions} from "vuex"
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "ShopCart",
@@ -48,17 +63,27 @@ export default {
       skuNum: 1,
     };
   },
-  computed:{
+  computed: {
     ...mapState({
-      shopcartList:(state)=>state.shopcart.shopcartList
-    })
+      shopcartList: (state) => state.shopcart.shopcartList,
+    }),
+    totalCount() {
+      return this.shopcartList
+        .filter((good) => good.isChecked === 1)
+        .reduce((p, c) => p + c.skuNum, 0);
+    },
+    totalPrice() {
+      return this.shopcartList
+        .filter((good) => good.isChecked === 1)
+        .reduce((p, c) => p + c.skuPrice * c.skuNum, 0);
+    },
   },
   methods: {
-    ...mapActions(['getShopcartList'])
+    ...mapActions(["getShopcartList"]),
   },
-  mounted(){
-    this.getShopcartList()
-  }
+  mounted() {
+    this.getShopcartList();
+  },
 };
 </script>
 
@@ -100,7 +125,7 @@ export default {
     margin-top: 15px;
   }
 }
-.cart-list{
+.cart-list {
   margin-top: 15px;
 }
 .cart-item {
@@ -120,7 +145,7 @@ export default {
 .img {
   width: 82px;
   height: 82px;
-  img{
+  img {
     width: 82px;
   }
 }
@@ -140,5 +165,41 @@ export default {
   width: 175px;
   display: flex;
   flex-direction: column;
+}
+.bottom {
+  width: 1200px;
+  height: 52px;
+  border: 1px solid #ccc;
+  margin-top: 15px;
+  padding: 0 0 0 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left,
+.right {
+  display: flex;
+}
+.left {
+  p {
+    margin-left: 20px;
+    color: #666;
+  }
+}
+.right {
+  align-items: center;
+  p {
+    margin-right: 20px;
+  }
+  button {
+    width: 96px;
+    height: 52px;
+    font-size: 18px;
+    color: #fff;
+    background-color: indianred;
+    border: none;
+    outline: none;
+  }
 }
 </style>

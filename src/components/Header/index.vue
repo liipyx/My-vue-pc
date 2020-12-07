@@ -4,16 +4,16 @@
       <div class="header-bar">
         <div class="header-login">
           <p>尚品汇欢迎您!</p>
-          <p v-if="show">
+          <p v-if="!$store.state.user.name">
             请<router-link to="/login" class="login">登录</router-link
             ><router-link to="/register" class="register">免费注册</router-link>
           </p>
-          <p v-else-if="!show">{{ $route.params.user }} <a>退出</a></p>
+          <p v-else>{{ $store.state.user.name }} <button class="quit">退出</button></p>
         </div>
         <div class="header-list">
           <ul>
             <li><router-link to="/">我的订单</router-link></li>
-            <li><router-link to="/">我的购物车</router-link></li>
+            <li><router-link to="/shopcart">我的购物车</router-link></li>
             <li><router-link to="/">我的尚品汇</router-link></li>
             <li><router-link to="/">尚品汇会员</router-link></li>
             <li><router-link to="/">企业采购</router-link></li>
@@ -43,7 +43,6 @@ export default {
   data() {
     return {
       searchText: "",
-      show: true,
     };
   },
   methods: {
@@ -94,15 +93,6 @@ export default {
       this.searchText = "";
     },
   },
-  watch: {
-    $route: {
-      handler(newVal) {
-        if (newVal.params.user) {
-          this.show = false;
-        }
-      },
-    },
-  },
   mounted() {
     this.$bus.$on("clearSearchText", this.clearSearchText);
   },
@@ -139,6 +129,10 @@ header {
   }
   .register {
     padding-left: 5px;
+  }
+  .quit{
+    border: none;
+    outline: none;
   }
 }
 .header-list {

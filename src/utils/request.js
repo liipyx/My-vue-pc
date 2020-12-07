@@ -3,9 +3,10 @@ import { Message } from "element-ui";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import getUserTempId from "./getUserTempId"
+import getUserTempId from "./getUserTempId";
+import store from "../store"
 
-const userTempId = getUserTempId()
+const userTempId = getUserTempId();
 
 const instance = axios.create({
   baseURL: "/api",
@@ -14,7 +15,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   NProgress.start();
-  config.headers.userTempId = userTempId
+  const token = store.state.user.token
+  if (token) {
+    config.headers.token = token
+  }
+  config.headers.userTempId = userTempId;
   return config;
 });
 
@@ -22,7 +27,7 @@ instance.interceptors.response.use(
   (response) => {
     NProgress.done();
     if (response.data.code === 200) {
-      Message.success("请求成功");
+      // Message.success("请求成功");
       return response.data.data;
     }
     const message = response.data.message;
