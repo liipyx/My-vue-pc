@@ -1,15 +1,20 @@
 <template>
   <form class="phone-login" @submit.prevent="login">
     <div class="phone">
-      <span></span>
-      <input type="text" placeholder="手机号" v-model="user.phone" />
+      <span class="icon"></span>
+      <ValidationProvider rules="required" v-slot="{ errors }">
+        <input type="text" placeholder="手机号" v-model="user.phone" />
+        <p class="err-msg">{{ errors[0] }}</p>
+      </ValidationProvider>
     </div>
     <div class="password">
-      <span></span>
+      <span class="icon"></span>
       <input type="text" placeholder="请输入密码" v-model="user.password" />
     </div>
     <div class="login-bottom">
-      <div class="check"><input type="checkbox" v-model="isAutoLogin" />自动登录</div>
+      <div class="check">
+        <input type="checkbox" v-model="isAutoLogin" />自动登录
+      </div>
       <p>忘记密码?</p>
     </div>
     <button type="submit" class="login-button">登 录</button>
@@ -21,6 +26,10 @@
 
 <script>
 import { mapState } from "vuex";
+import { ValidationProvider, extend } from "vee-validate";
+import { required } from "vee-validate/dist/rules";
+
+extend("required", required);
 
 export default {
   name: "PhoneLogin",
@@ -31,7 +40,7 @@ export default {
         password: "",
       },
       isLogining: false,
-      isAutoLogin:true
+      isAutoLogin: true,
     };
   },
   created() {
@@ -42,7 +51,7 @@ export default {
   computed: {
     ...mapState({
       token: (state) => state.user.token,
-      name:(state) => state.user.name
+      name: (state) => state.user.name,
     }),
   },
   methods: {
@@ -52,15 +61,18 @@ export default {
         this.isLogining = true;
         const { phone, password } = this.user;
         await this.$store.dispatch("reqLogin", { phone, password });
-        if(this.isAutoLogin){
-          localStorage.setItem("token",this.token)
-          localStorage.setItem("name",this.name)
+        if (this.isAutoLogin) {
+          localStorage.setItem("token", this.token);
+          localStorage.setItem("name", this.name);
         }
         this.$router.replace("/");
       } catch {
         this.isLogining = false;
       }
     },
+  },
+  components: {
+    ValidationProvider,
   },
 };
 </script>
@@ -74,7 +86,8 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  span {
+  position: relative;
+  .icon {
     display: inline-block;
     width: 10%;
     height: 32px;
@@ -82,13 +95,25 @@ export default {
     border-right: none;
     box-sizing: border-box;
   }
-  input {
+  /* input {
     width: 90%;
     height: 32px;
     border: 1px solid #ccc;
     outline: none;
     padding: 10px;
     box-sizing: border-box;
+  } */
+  input {
+    width: 306px;
+    height: 32px;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .err-msg{
+    position: absolute;
+    color: red;
   }
 }
 .phone {

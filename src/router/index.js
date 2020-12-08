@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import store from "../store"
+
 import Home from "../views/Home";
 import Login from "../views/Login";
 import Register from "../views/Register";
@@ -8,6 +10,9 @@ import Search from "../views/Search";
 import Detail from "../views/Detail"
 import AddCartSuccess from "../views/AddCartSuccess"
 import ShopCart from "../views/ShopCart"
+import Trade from "../views/Trade"
+import Pay from "../views/Pay"
+import Center from "../views/Center"
 
 const push = VueRouter.prototype.push;
 VueRouter.prototype.push = function(location, onComplete, onAbort = () => {}) {
@@ -20,7 +25,7 @@ VueRouter.prototype.replace = function(location, onComplete, onAbort = () => {})
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
   routes: [
     {
       path: "/",
@@ -36,18 +41,6 @@ export default new VueRouter({
       meta: {
         isFooterHide: true,
       },
-      /* meta: {
-        isFooterHide: true,
-      }, */
-      /* children: [
-        {
-          path: "phoneLogin",
-          component: PhoneLogin,
-          meta: {
-            isFooterHide: true,
-          },
-        },
-      ], */
     },
     {
       path: "/register",
@@ -69,13 +62,35 @@ export default new VueRouter({
     {
       name: 'addCartSuccess',
       path: '/addCartSuccess',
-      component:AddCartSuccess
+      component: AddCartSuccess,
+      /* beforeEnter: (to, from, next) => {
+        console.log(store.state)
+        if (from.name === "detail" && store.state.shopcart.skuName) {
+          return next()
+        }
+        next("/shopcart")
+      } */
     },
     {
       name: 'shopcart',
       path: '/shopcart',
       component:ShopCart
     },
+    {
+      name: 'trade',
+      path: '/trade',
+      component: Trade
+    },
+    {
+      name: 'pay',
+      path: '/pay',
+      component: Pay
+    },
+    {
+      name: 'center',
+      path: '/center',
+      component: Center
+    }
   ],
   scrollBehavior() {
     return {
@@ -84,3 +99,13 @@ export default new VueRouter({
     }
   }
 });
+
+const permissionPaths = ["/trade","/pay","/center"]
+router.beforeEach((to, from, next) => {
+  if (permissionPaths.indexOf(to.path) > -1 && !store.state.user.token) {
+    next("/login")
+  }
+  next()
+})
+
+export default router

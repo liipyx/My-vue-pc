@@ -102,7 +102,9 @@ export default {
       try {
         await this.addShopcart({ 
           skuId: this.skuInfo.id, 
-          skuNum: this.skuNum 
+          skuNum: this.skuNum ,
+          skuName: this.skuInfo.skuName,
+          skuUrl: this.skuInfo.skuImageList[this.currentImgIndex].imgUrl
           });
         this.$router.push(`/addCartSuccess?skuNum=${this.skuNum}`);
       } catch (err) {

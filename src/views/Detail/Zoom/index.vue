@@ -132,6 +132,7 @@ export default {
   left: 401px;
   overflow: hidden;
   display: none;
+  z-index: 2;
   img {
     width: 800px;
     position: absolute;

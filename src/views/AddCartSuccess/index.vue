@@ -8,16 +8,18 @@
       <div class="cart-wrap">
         <div class="cart-good">
           <div class="good-img">
-            <img src="" alt="" />
+            <img :src="skuUrl" alt="" />
           </div>
           <div class="good-info">
-            <p class="good-title">feer地方</p>
-            <p class="good-attr">颜色：五彩斑斓的黑 数量：</p>
+            <p class="good-title">{{ skuName }}</p>
+            <p class="good-attr">颜色：五彩斑斓的黑 数量：{{ skuNum }}</p>
           </div>
         </div>
         <div class="cart-btns">
           <button>查看商品详情</button>
-          <router-link to="/shopcart"><button>去购物车结算 ></button></router-link>
+          <router-link to="/shopcart"
+            ><button>去购物车结算 ></button></router-link
+          >
         </div>
       </div>
     </div>
@@ -25,13 +27,31 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  name: "addCartSuccess"
+  name: "addCartSuccess",
+  computed: {
+    ...mapState({
+      skuNum: (state) => state.shopcart.skuNum,
+      skuName: (state) => state.shopcart.skuName,
+      skuUrl: (state) => state.shopcart.skuUrl,
+    }),
+  },
+  beforeRouteEnter:(to,from,next)=>{
+    next(vm=>{
+      console.log(from)
+      if(vm.skuName){
+        return next()
+      }
+      next("/shopcart")
+    })
+  }
 };
 </script>
 
 <style lang="less" scoped>
-.success-wrap{
+.success-wrap {
   background-color: #f4f4f4;
 }
 .add-cart-success {
@@ -61,26 +81,26 @@ export default {
   width: 60px;
   height: 60px;
   border: 1px solid #ccc;
-  img{
+  img {
     width: 100%;
   }
 }
-.cart-good{
+.cart-good {
   display: flex;
 }
-.good-info{
+.good-info {
   margin-left: 20px;
 }
-.good-title{
+.good-title {
   height: 28px;
   line-height: 28px;
   font-size: 14px;
 }
-.good-attr{
+.good-attr {
   color: #aaa;
 }
-.cart-btns{
-  button{
+.cart-btns {
+  button {
     padding: 7px 36px;
     font-size: 15px;
     border: 1px solid #ccc;
