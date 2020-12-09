@@ -8,7 +8,7 @@
         v-for="address in tradeInfo.userAddressList"
         :key="address.id"
       >
-        <span :class="{username:true,selected:true}">{{ address.consignee }}</span>
+        <span :class="{username:true,selected:address.id===selectedId}" @click="selectedId=address.id">{{ address.consignee }}</span>
         <p>
           <span class="s1">{{ address.userAddress }}</span>
           <span class="s2">{{ address.phoneNum }}</span>
@@ -88,9 +88,9 @@
       <div class="price">应付金额:<span>¥5399.00</span></div>
       <div class="receiveInfo">
         寄送至:
-        <span>北京市昌平区宏福科技园综合楼6层</span>
-        收货人：<span>张三</span>
-        <span>15010658793</span>
+        <span>{{selectedInfo.userAddress}}</span>
+        收货人：<span>{{selectedInfo.consignee}}</span>
+        <span>{{selectedInfo.phoneNum}}</span>
       </div>
     </div>
     <div class="sub clearFix">
@@ -107,12 +107,19 @@ export default {
   data() {
     return {
       tradeInfo: {},
+      selectedId:-1
     };
+  },
+  computed:{
+    selectedInfo(){
+      return this.tradeInfo.userAddressList? this.tradeInfo.userAddressList.find(address=>address.id === this.selectedId) : {}
+    }
   },
   async mounted() {
     const tradeInfo = await orderTradeRequest();
     console.log(tradeInfo);
     this.tradeInfo = tradeInfo;
+    this.selectedId = tradeInfo.userAddressList.find(address=>address.isDefault === "1").id
   },
 };
 </script>
