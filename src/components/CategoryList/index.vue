@@ -157,29 +157,33 @@ export default {
       //如果点的不是a标签就return
       if (!categoryname) return;
       //点击之后隐藏列表
-      this.inSearchShow = false
-      
+      this.inSearchShow = false;
+
       // this.$router.push(`/search?categoryName=${categoryname}&category${categorylevel}Id=${categoryid}`)
       const location = {
         name: "search",
         query: {
           categoryName: categoryname,
           [`category${categorylevel}Id`]: categoryid,
-        }
-      }
+        },
+      };
       //判断又没params参数
-      if(this.$route.params){
-        location.params = this.$route.params
+      if (this.$route.params) {
+        location.params = this.$route.params;
       }
-      location.params = this.$route.params //不判断也可？
-      if(this.$route.path === "/" || this.$route.path.indexOf("/home") > -1){
+      location.params = this.$route.params; //不判断也可？
+      if (this.$route.path === "/" || this.$route.path.indexOf("/home") > -1) {
         this.$router.push(location);
-      }{
+      }
+      {
         this.$router.replace(location);
       }
     },
   },
   mounted() {
+    // console.log("111")  //两次
+    if (this.categoryList.length) return;
+    // console.log("222")  //一次
     this.getCategoryList();
   },
 };
@@ -237,7 +241,7 @@ export default {
     height: 0;
   }
   &.grow-enter-active {
-    transition: height .1s;
+    transition: height 0.1s;
     overflow: hidden;
   }
   &.grow-enter-to {

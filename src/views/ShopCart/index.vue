@@ -151,10 +151,13 @@ export default {
   mounted() {
     this.getShopcartList();
     // this.allCheck()
+    console.log(this.shopcartList.reduce((p, c) => {
+        return p + c.isChecked;
+      }, 0),this.shopcartList.length)
     this.allChecked =
       this.shopcartList.reduce((p, c) => {
         return p + c.isChecked;
-      }, 0) === this.shopcartList.length
+      }, 0) === this.shopcartList.length && this.shopcartList.length != 0
         ? true
         : false;
   },

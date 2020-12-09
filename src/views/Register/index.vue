@@ -42,7 +42,10 @@
         <input type="checkbox" v-model="user.isAgree" />
         <p>同意协议并注册《尚品汇用户协议》</p>
       </div>
-      <button class="regster-button" @click="register">完成注册</button>
+      <!-- <button class="regster-button" @click="register">完成注册</button> -->
+      <div class="regster-button">
+        <Button @click="register">完成注册</Button>
+      </div>
     </div>
   </section>
 </template>
@@ -50,6 +53,7 @@
 <script>
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
+import Button from "../../components/Button";
 
 extend("required", {
   ...required,
@@ -91,17 +95,17 @@ export default {
         const { phone, code, password, rePassword, isAgree } = this.user;
         if (!isAgree) {
           this.$message.error("请同意用户协议");
-          return
+          return;
         }
         if (password !== rePassword) {
           this.$message.error("两次输入的密码不一致");
-          return
+          return;
         }
         await this.$store.dispatch("reqRegister", { phone, password, code });
         this.$router.push("/login");
-      } catch (err){
+      } catch (err) {
         // this.$message.error(err.data)
-        console.log(err)
+        console.log(err);
         this.user.password = "";
         this.user.rePassword = "";
         this.user.code = "";
@@ -114,6 +118,7 @@ export default {
   },
   components: {
     ValidationProvider,
+    Button,
   },
 };
 </script>
@@ -187,7 +192,7 @@ section {
   display: flex;
   text-align: center;
 }
-.regster-button {
+/* .regster-button {
   width: 270px;
   height: 38px;
   background-color: indianred;
@@ -197,6 +202,19 @@ section {
   font-size: 16px;
   color: #fff;
   font-weight: bold;
+} */
+.regster-button {
+  button {
+    width: 270px;
+    height: 38px;
+    background-color: indianred;
+    outline: none;
+    border: none;
+    margin: 18px 0 0 505px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+  }
 }
 /* .error-msg {
   display: block;

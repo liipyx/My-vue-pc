@@ -1,8 +1,17 @@
 <template>
   <div class="swiper-container" ref="swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="item in carouselList" :key="item.id">
-        <img :src="item.imgUrl" alt="" />
+      <div
+        class="swiper-slide"
+        v-for="(item, index) in carouselList"
+        :key="item.id"
+      >
+        <img
+          v-if="index === 0 || index === carouselList.length - 1"
+          :src="item.imgUrl"
+          alt=""
+        />
+        <img v-else v-lazy="item.imgUrl" alt="" />
       </div>
     </div>
     <!-- 如果需要分页器 -->
@@ -13,7 +22,7 @@
     <div class="swiper-button-next"></div>
 
     <!-- 如果需要滚动条 -->
-    <div class="swiper-scrollbar"></div>
+    <!-- <div class="swiper-scrollbar"></div> -->
   </div>
 </template>
 
@@ -29,15 +38,23 @@ export default {
       required: true,
     },
   },
+  watch: {
+    carouselList() {
+      if (this.swiper) return;
+      this.$nextTick(() => {
+        this.initSwiper();
+      });
+    },
+  },
   methods: {
     initSwiper() {
-      new Swiper(this.$refs.swiper, {
+      this.swiper = new Swiper(this.$refs.swiper, {
         loop: true, // 循环模式选项
 
         // 如果需要分页器
         pagination: {
           el: ".swiper-pagination",
-          clickable : true
+          clickable: true,
         },
 
         autoplay: {
@@ -53,15 +70,8 @@ export default {
       });
     },
   },
-  watch: {
-    carouselList() {
-      if (this.swiper) return;
-      this.$nextTick(() => {
-        this.initSwiper();
-      });
-    },
-  },
   mounted() {
+    if (!this.carouselList.length) return;
     this.initSwiper();
   },
 };
@@ -89,7 +99,7 @@ export default {
   height: 100%;
 }
 .swiper-slide {
-  overflow: hidden;
+  // overflow: hidden;
   height: 100%;
   img {
     width: 100%;

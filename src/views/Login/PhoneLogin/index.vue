@@ -1,5 +1,6 @@
 <template>
-  <form class="phone-login" @submit.prevent="login">
+  <!-- <form class="phone-login" @submit.prevent="login"> -->
+  <div class="phone-login">
     <div class="phone">
       <span class="icon"></span>
       <ValidationProvider rules="required" v-slot="{ errors }">
@@ -17,17 +18,22 @@
       </div>
       <p>忘记密码?</p>
     </div>
-    <button type="submit" class="login-button">登 录</button>
+    <!-- <button type="submit" class="login-button">登 录</button> -->
+    <div class="login-button">
+      <Button @click="login">登录</Button>
+    </div>
     <div class="immediate">
       <router-link to="/register">立即注册</router-link>
     </div>
-  </form>
+  </div>
+  <!-- </form> -->
 </template>
 
 <script>
 import { mapState } from "vuex";
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
+import Button from "../../../components/Button";
 
 extend("required", required);
 
@@ -39,7 +45,7 @@ export default {
         phone: "",
         password: "",
       },
-      isLogining: false,
+      // isLogining: false,
       isAutoLogin: true,
     };
   },
@@ -57,8 +63,8 @@ export default {
   methods: {
     async login() {
       try {
-        if (this.isLogining) return;
-        this.isLogining = true;
+        // if (this.isLogining) return;
+        // this.isLogining = true;
         const { phone, password } = this.user;
         await this.$store.dispatch("reqLogin", { phone, password });
         if (this.isAutoLogin) {
@@ -67,12 +73,13 @@ export default {
         }
         this.$router.replace("/");
       } catch {
-        this.isLogining = false;
+        // this.isLogining = false;
       }
     },
   },
   components: {
     ValidationProvider,
+    Button,
   },
 };
 </script>
@@ -111,7 +118,7 @@ export default {
     padding: 10px;
     box-sizing: border-box;
   }
-  .err-msg{
+  .err-msg {
     position: absolute;
     color: red;
   }
@@ -130,7 +137,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.login-button {
+/* .login-button {
   width: 100%;
   height: 35px;
   margin-top: 20px;
@@ -140,6 +147,19 @@ export default {
   background-color: indianred;
   outline: none;
   border: none;
+} */
+.login-button {
+  button {
+    width: 100%;
+    height: 35px;
+    margin-top: 20px;
+    padding: 6px;
+    font-size: 16px;
+    color: #fff;
+    background-color: indianred;
+    outline: none;
+    border: none;
+  }
 }
 .immediate {
   width: 100%;

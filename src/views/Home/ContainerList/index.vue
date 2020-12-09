@@ -39,7 +39,7 @@ export default {
 .carousel-wrap{
   width: 730px;
   height: 454px;
-  background-color: thistle;
+  // background-color: thistle;
   position: absolute;
   top: 0;
   left: 210px;

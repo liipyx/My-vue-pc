@@ -20,7 +20,7 @@
           </li>
         </ul>
         <div class="key-img">
-          <img :src="floor.imgUrl" alt="">
+          <img v-lazy="floor.imgUrl" alt="">
         </div>
       </div>
       <div class="carousel-wrap">
@@ -28,21 +28,21 @@
       </div>
       <div class="small-wrap">
         <div class="small">
-          <img :src="floor.recommendList[0]" alt="">
+          <img v-lazy="floor.recommendList[0]" alt="">
         </div>
         <div class="small">
-          <img :src="floor.recommendList[1]" alt="">
+          <img v-lazy="floor.recommendList[1]" alt="">
         </div>
       </div>
       <div class="middle">
-        <img :src="floor.bigImg" alt="">
+        <img v-lazy="floor.bigImg" alt="">
       </div>
       <div class="small-wrap">
         <div class="small">
-          <img :src="floor.recommendList[2]" alt="">
+          <img v-lazy="floor.recommendList[2]" alt="">
         </div>
         <div class="small">
-          <img :src="floor.recommendList[3]" alt="">
+          <img v-lazy="floor.recommendList[3]" alt="">
         </div>
       </div>
     </div>
@@ -108,6 +108,10 @@ export default {
 .imgLIst {
   height: 360px;
   display: flex;
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
 .keywords {
   width: 218px;
@@ -139,7 +143,7 @@ export default {
 .carousel-wrap {
   width: 328px;
   height: 100%;
-  background-color: lightskyblue;
+  // background-color: lightskyblue;
 }
 
 .small-wrap {
