@@ -8,8 +8,11 @@ import store from "../store"
 
 const userTempId = getUserTempId();
 
+const frefix_url = process.env.NODE_ENV === "development" ? "/" : "http://182.92.128.115/"
+console.log(process.env.NODE_ENV)
+
 const instance = axios.create({
-  baseURL: "/api",
+  baseURL: `${frefix_url}api`,
   headers: {},
 });
 

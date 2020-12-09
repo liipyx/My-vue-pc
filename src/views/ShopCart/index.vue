@@ -27,12 +27,13 @@
         <div class="price">{{ good.skuPrice }}</div>
         <div class="count-btn-wrap">
           <div class="count-btn">
-            <button
+            <!-- <button
               @click="updataCount(good.skuId, -1)"
               :disabled="good.skuNum <= 1"
             >
               -
-            </button>
+            </button> -->
+            <Button @click="updataCount(good.skuId, -1)" :disabled="good.skuNum <= 1">-</Button>
             <input
               type="text"
               ref="countInp"
@@ -40,12 +41,13 @@
               @change="updata(good.skuId, good.skuNum, $event)"
               @input="inputCount($event)"
             />
-            <button
+            <Button @click="updataCount(good.skuId, 1)" :disabled="good.skuNum >= 100">-</Button>
+            <!-- <button
               @click="updataCount(good.skuId, 1)"
               :disabled="good.skuNum >= 100"
             >
               +
-            </button>
+            </button> -->
           </div>
         </div>
         <div class="total-price">{{ good.skuNum * good.cartPrice }}</div>
@@ -77,6 +79,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import Button from "../../components/Button"
 
 export default {
   name: "ShopCart",
@@ -105,7 +108,7 @@ export default {
     ...mapActions(["getShopcartList", "addShopcart", "goodsCheck", "delGoods"]),
     ...mapMutations(["ALL_CHECKED"]),
     async updataCount(skuId, skuNum) {
-      this.formatCount();
+      // this.formatCount();
       await this.addShopcart({ skuId, skuNum });
       // this.getShopcartList();
     },
@@ -148,8 +151,8 @@ export default {
       this.$router.push("/trade");
     },
   },
-  mounted() {
-    this.getShopcartList();
+  async mounted() {
+    await this.getShopcartList();
     // this.allCheck()
     console.log(this.shopcartList.reduce((p, c) => {
         return p + c.isChecked;
@@ -157,10 +160,13 @@ export default {
     this.allChecked =
       this.shopcartList.reduce((p, c) => {
         return p + c.isChecked;
-      }, 0) === this.shopcartList.length && this.shopcartList.length != 0
+      }, 0) === this.shopcartList.length && this.shopcartList.length !== 0
         ? true
         : false;
   },
+  components:{
+    Button
+  }
 };
 </script>
 

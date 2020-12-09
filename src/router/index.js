@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 
 import store from "../store"
 
-import Home from "../views/Home";
+/* import Home from "../views/Home";
 import Login from "../views/Login";
 import Register from "../views/Register";
 import Search from "../views/Search";
@@ -12,7 +12,18 @@ import AddCartSuccess from "../views/AddCartSuccess"
 import ShopCart from "../views/ShopCart"
 import Trade from "../views/Trade"
 import Pay from "../views/Pay"
-import Center from "../views/Center"
+import Center from "../views/Center" */
+
+const Home = ()=> import(/* webpackChunkName:"Home" */ "../views/Home");
+const Login = ()=> import(/* webpackChunkName:"Login" */ "../views/Login");
+const Register = ()=> import(/* webpackChunkName:"Register" */ "../views/Register");
+const Search = ()=> import(/* webpackChunkName:"Search" */ "../views/Search");
+const Detail = ()=> import(/* webpackChunkName:"Detail" */ "../views/Detail")
+const AddCartSuccess = ()=> import(/* webpackChunkName:"AddCartSuccess" */ "../views/AddCartSuccess")
+const ShopCart = ()=> import(/* webpackChunkName:"ShopCart" */ "../views/ShopCart")
+const Trade = ()=> import(/* webpackChunkName:"Trade" */ "../views/Trade")
+const Pay = ()=> import(/* webpackChunkName:"Pay" */ "../views/Pay")
+const Center = ()=> import(/* webpackChunkName:"Center" */ "../views/Center")
 
 const push = VueRouter.prototype.push;
 VueRouter.prototype.push = function(location, onComplete, onAbort = () => {}) {
