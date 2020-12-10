@@ -56,6 +56,7 @@
         <textarea
           placeholder="建议留言前先与商家沟通确认"
           class="remarks-cont"
+          v-model="remarks"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -85,7 +86,7 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:<span>¥5399.00</span></div>
+      <div class="price">应付金额:<span>¥{{tradeInfo.totalAmount}}</span></div>
       <div class="receiveInfo">
         寄送至:
         <span>{{selectedInfo.userAddress}}</span>
@@ -94,20 +95,22 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <button class="subBtn" @click="handleSubmit(tradeInfo.tradeNo,selectedInfo.consignee,selectedInfo.phoneNum,selectedInfo.userAddress,'ONLINE',remarks,tradeInfo.detailArrayList)">提交订单</button>
     </div>
   </div>
 </template>
 
 <script>
-import { orderTradeRequest } from "../../api/order";
+// import {mapActions} from "vuex"
+import { orderTradeRequest,submitOrderRequest } from "../../api/order";
 
 export default {
   name: "Trade",
   data() {
     return {
       tradeInfo: {},
-      selectedId:-1
+      selectedId:-1,
+      remarks:"",
     };
   },
   computed:{
@@ -115,9 +118,40 @@ export default {
       return this.tradeInfo.userAddressList? this.tradeInfo.userAddressList.find(address=>address.id === this.selectedId) : {}
     }
   },
+  methods:{
+    // ...mapActions(["submitOrder"]),
+    async handleSubmit(tradeNo,consignee,consigneeTel,deliveryAddress,paymentWay,orderComment,orderDetailList){
+      /* await this.submitOrder({
+        tradeNo,
+        consignee,
+        consigneeTel,
+        deliveryAddress,
+        paymentWay,
+        orderComment,
+        orderDetailList
+      }) 
+      this.$router.push(`/pay?tradeNo=${tradeNo}`)
+      */
+      const orderId = await submitOrderRequest(
+        tradeNo,
+        consignee,
+        consigneeTel,
+        deliveryAddress,
+        paymentWay,
+        orderComment,
+        orderDetailList
+      )
+      this.$router.push({
+        path:"/pay",
+        query:{
+          tradeNo,
+          orderId
+        }
+      })
+    }
+  },
   async mounted() {
     const tradeInfo = await orderTradeRequest();
-    console.log(tradeInfo);
     this.tradeInfo = tradeInfo;
     this.selectedId = tradeInfo.userAddressList.find(address=>address.isDefault === "1").id
   },
@@ -370,6 +404,8 @@ export default {
       text-align: center;
       color: #fff;
       background-color: #e1251b;
+      border: none;
+      outline: none;
     }
   }
 }

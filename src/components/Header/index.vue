@@ -12,10 +12,10 @@
         </div>
         <div class="header-list">
           <ul>
-            <li><router-link to="/">我的订单</router-link></li>
+            <li><router-link to="/myorder">我的订单</router-link></li>
             <li><router-link to="/shopcart">我的购物车</router-link></li>
-            <li><router-link to="/">我的尚品汇</router-link></li>
-            <li><router-link to="/">尚品汇会员</router-link></li>
+            <li><router-link to="/center">我的尚品汇</router-link></li>
+            <li><router-link to="/test">尚品汇会员</router-link></li>
             <li><router-link to="/">企业采购</router-link></li>
             <li><router-link to="/">关注尚品汇</router-link></li>
             <li><router-link to="/">合作招商</router-link></li>

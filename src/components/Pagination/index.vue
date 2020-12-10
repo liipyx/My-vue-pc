@@ -91,7 +91,7 @@ export default {
       return Math.ceil(this.total / this.pageSize);
     },
     pageNum() {
-      const { myCurrentPage, pagerCount, totalPages } = this;
+      /* const { myCurrentPage, pagerCount, totalPages } = this;
 
       // 中间start-end总计的按钮数量（不包含开头和结尾）
       const count = pagerCount - 2;
@@ -126,8 +126,8 @@ export default {
       return {
         startPage,
         endPage,
-      };
-      /* const changePageCount = this.pagerCount - 2  //7
+      }; */
+      const changePageCount = this.pagerCount - 2  //7
       const halfPage = Math.floor(changePageCount / 2);  //3
       let startPage,endPage
       if (this.totalPage < this.pagerCount) {
@@ -148,7 +148,7 @@ export default {
         startPage = this.myCurrentPage - halfPage;
         endPage = this.myCurrentPage + halfPage;
       }
-      return {startPage,endPage} */
+      return {startPage,endPage}
     },
     btnCount() {
       let count = 0;

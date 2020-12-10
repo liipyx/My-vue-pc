@@ -24,6 +24,9 @@ const ShopCart = ()=> import(/* webpackChunkName:"ShopCart" */ "../views/ShopCar
 const Trade = ()=> import(/* webpackChunkName:"Trade" */ "../views/Trade")
 const Pay = ()=> import(/* webpackChunkName:"Pay" */ "../views/Pay")
 const Center = ()=> import(/* webpackChunkName:"Center" */ "../views/Center")
+const Test = ()=> import(/* webpackChunkName:"Center" */ "../views/Test")
+const PaySuccess = ()=> import(/* webpackChunkName:"Center" */ "../views/PaySuccess")
+const MyOrder = ()=> import(/* webpackChunkName:"Center" */ "../views/Center/MyOrder")
 
 const push = VueRouter.prototype.push;
 VueRouter.prototype.push = function(location, onComplete, onAbort = () => {}) {
@@ -101,6 +104,21 @@ const router = new VueRouter({
       name: 'center',
       path: '/center',
       component: Center
+    },
+    {
+      name: 'paysuceess',
+      path: '/paysuceess',
+      component: PaySuccess
+    },
+    {
+      name: 'myorder',
+      path: '/myorder',
+      component: MyOrder
+    },
+    {
+      name: 'test',
+      path: '/test',
+      component:Test
     }
   ],
   scrollBehavior() {

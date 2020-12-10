@@ -51,7 +51,8 @@
         </div>
         <!-- 右侧内容 -->
         <div class="order-right">
-          <div class="order-content">
+        <MyOrder></MyOrder>
+          <!-- <div class="order-content">
             <div class="title">
               <h3>我的订单</h3>
             </div>
@@ -216,7 +217,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--猜你喜欢-->
           <div class="like">
             <h4 class="kt">猜你喜欢</h4>
@@ -280,8 +281,13 @@
 </template>
 
 <script>
+import MyOrder from "../Center/MyOrder"
+
 export default {
   name: "",
+  components:{
+    MyOrder
+  }
 };
 </script>
 

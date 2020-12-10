@@ -7,8 +7,8 @@
           <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
         </h4>
         <div class="paymark">
-          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>145687</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>{{orderPayInfo.orderId}}</em></span>
+          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥{{orderPayInfo.totalFee}}</em></span>
         </div>
       </div>
       <div class="checkout-info">
@@ -65,7 +65,7 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <button class="btn" @click="pay">立即支付</button>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -82,9 +82,65 @@
 </template>
 
 <script>
-  export default {
-    name: 'Pay',
+// import {mapState} from "vuex"
+import QRCode from 'qrcode'
+import {orderPayRequest} from "../../api/order"
+import {payStateRequest} from "../../api/order"
+
+export default {
+  name: 'Pay',
+  data(){
+    return{
+      orderPayInfo:{}
+    }
+  },
+  computed:{
+    /* ...mapState({
+      orderId:(state)=>state.order.orderId
+    }) */
+  },
+  methods:{
+    pay(){
+      QRCode.toDataURL(this.orderPayInfo.codeUrl)
+      .then(url => {
+        this.$confirm(`<img src="${url}" alt="qrcode" />`, '请使用微信扫码支付', {
+          confirmButtonText: '我已成功支付',
+          cancelButtonText: '支付中遇到了问题',
+          center: true,
+          dangerouslyUseHTMLString: true,
+          showClose: false
+        }).then(() => {
+          payStateRequest(this.$route.query.orderId)
+          .then((res)=>{
+            console.log(res)
+            this.$message({
+              type: 'success',
+              message: '支付成功!'
+            });
+            this.$router.push("/paysuceess")
+          })
+          .catch(()=>{
+            this.$router.push("/myorder")
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '请联系客服！'
+          });
+        });
+      })
+      .catch(() => {
+        this.$message.error("支付遇到了问题，请重新试试")
+      })
+      
+    }
+  },
+  async mounted(){
+    const orderPayInfo = await orderPayRequest(this.$route.query.orderId)
+    // console.log(orderPayInfo)
+    this.orderPayInfo = orderPayInfo
   }
+}
 </script>
 
 <style lang="less" scoped>
@@ -227,6 +283,7 @@
           border-radius: 0;
           background-color: #e1251b;
           border: 1px solid #e1251b;
+          outline: none;
           color: #fff;
           text-align: center;
           vertical-align: middle;

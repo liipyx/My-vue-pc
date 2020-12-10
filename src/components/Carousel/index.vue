@@ -9,7 +9,6 @@
         <img
           v-if="index === 0 || index === carouselList.length - 1"
           :src="item.imgUrl"
-          alt=""
         />
         <img v-else v-lazy="item.imgUrl" alt="" />
       </div>
