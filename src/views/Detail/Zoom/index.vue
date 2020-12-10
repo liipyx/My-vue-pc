@@ -37,39 +37,9 @@ export default {
     ...mapGetters(["skuInfo"]),
   },
   methods:{
-    enter(e){
+    enter(){
       this.maskShow=true
       this.bigShow=true
-      const mouseToImg = {
-        x:e.offsetX,
-        y:e.offsetY
-      }
-      this.mouseToImg = mouseToImg
-      this.$refs.mask.style.left = this.mouseToImg.x - this.mouseToMask.x + 'px'
-      this.$refs.mask.style.top = this.mouseToImg.y - this.mouseToMask.y + 'px'
-
-      const resultPoint = {
-        x:this.mouseToImg.x - this.mouseToMask.x,
-        y:this.mouseToImg.y - this.mouseToMask.y
-      }
-      if(resultPoint.x <= 0){
-        resultPoint.x = 0
-      }else if(resultPoint.x >= this.$refs.middle.clientWidth){
-        resultPoint.x = this.$refs.middle.clientWidth
-      }
-      if(resultPoint.y <= 0){
-        resultPoint.y = 0
-      }else if(resultPoint.y >= this.$refs.middle.clientHeight){
-        resultPoint.y = this.$refs.middle.clientHeight
-      }
-
-      this.resultPoint = resultPoint
-
-      this.$refs.mask.style.left = this.resultPoint.x + 'px'
-      this.$refs.mask.style.top = this.resultPoint.y + 'px'
-      
-      this.$refs.bigImg.style.left = -2*( this.resultPoint.x) + 'px'
-      this.$refs.bigImg.style.top = -2*( this.resultPoint.y) + 'px'
     },
     move(e){
       const mouseToImg = {

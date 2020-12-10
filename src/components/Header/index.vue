@@ -4,11 +4,11 @@
       <div class="header-bar">
         <div class="header-login">
           <p>尚品汇欢迎您!</p>
-          <p v-if="!$store.state.user.name">
+          <p v-if="!($store.state.user.name && isShow)">
             请<router-link to="/login" class="login">登录</router-link
             ><router-link to="/register" class="register">免费注册</router-link>
           </p>
-          <p v-else>{{ $store.state.user.name }} <button class="quit">退出</button></p>
+          <p v-else>{{ $store.state.user.name }} <button class="quit" @click="quit">退出</button></p>
         </div>
         <div class="header-list">
           <ul>
@@ -38,11 +38,14 @@
 </template>
 
 <script>
+import {quitLoginRequest} from "../../api/user"
+
 export default {
   name: "Header",
   data() {
     return {
       searchText: "",
+      isShow:true
     };
   },
   methods: {
@@ -92,6 +95,12 @@ export default {
     clearSearchText() {
       this.searchText = "";
     },
+    async quit(){
+      await quitLoginRequest()
+      localStorage.clear()
+      this.isShow = false
+      this.$router.push("/home")
+    }
   },
   mounted() {
     this.$bus.$on("clearSearchText", this.clearSearchText);

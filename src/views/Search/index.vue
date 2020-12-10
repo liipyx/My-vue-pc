@@ -83,7 +83,7 @@
             <div class="bottom">
               <p>已有<span>xxx</span>人评价</p>
               <div class="pro-btn">
-                <a class="add-shopcart">加入购物车</a>
+                <a class="add-shopcart" @click="add(good.id,1,good.title,good.defaultImg)">加入购物车</a>
                 <a class="collection">收藏</a>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default {
     ...mapGetters(["goodsList", "total"]),
   },
   methods: {
-    ...mapActions(["getProductionList"]),
+    ...mapActions(["getProductionList","addShopcart"]),
     getProductions(pageNo = 1) {
       const {
         category1Id,
@@ -256,6 +256,11 @@ export default {
 
       console.log(this.options.order);
     },
+    //加入购物车
+    async add(skuId, skuNum, skuName, skuUrl){
+      await this.addShopcart({skuId, skuNum, skuName, skuUrl})
+      this.$router.push(`/addCartSuccess?skuNum=${this.skuNum}`)
+    }
   },
   watch: {
     $route() {

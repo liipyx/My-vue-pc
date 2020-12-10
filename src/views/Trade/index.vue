@@ -95,13 +95,14 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <button class="subBtn" @click="handleSubmit(tradeInfo.tradeNo,selectedInfo.consignee,selectedInfo.phoneNum,selectedInfo.userAddress,'ONLINE',remarks,tradeInfo.detailArrayList)">提交订单</button>
+      <Button class="subBtn" @click="handleSubmit(tradeInfo.tradeNo,selectedInfo.consignee,selectedInfo.phoneNum,selectedInfo.userAddress,'ONLINE',remarks,tradeInfo.detailArrayList)">提交订单</Button>
     </div>
   </div>
 </template>
 
 <script>
 // import {mapActions} from "vuex"
+import Button from "../../components/Button"
 import { orderTradeRequest,submitOrderRequest } from "../../api/order";
 
 export default {
@@ -149,6 +150,9 @@ export default {
         }
       })
     }
+  },
+  components:{
+    Button
   },
   async mounted() {
     const tradeInfo = await orderTradeRequest();

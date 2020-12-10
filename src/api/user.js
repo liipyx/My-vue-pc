@@ -22,14 +22,10 @@ export const registerRequest = ({phone, password,code}) => {
     },
   });
 };
-/* export const registerRequest = ({ phone, password, code }) => {
+
+export const quitLoginRequest = () => {
 	return request({
-		method: "POST",
-		url: "/user/passport/register",
-		data: {
-			phone,
-			password,
-			code,
-		},
+		method: "GET",
+		url: "/user/passport/logout"
 	});
-}; */
+};

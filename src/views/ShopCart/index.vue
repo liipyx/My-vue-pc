@@ -41,7 +41,7 @@
               @change="updata(good.skuId, good.skuNum, $event)"
               @input="inputCount($event)"
             />
-            <Button @click="updataCount(good.skuId, 1)" :disabled="good.skuNum >= 100">-</Button>
+            <Button @click="updataCount(good.skuId, 1)" :disabled="good.skuNum >= 100">+</Button>
             <!-- <button
               @click="updataCount(good.skuId, 1)"
               :disabled="good.skuNum >= 100"
